@@ -1,11 +1,16 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from rango.models import Category #imports the category model
+# Import the Category model
+from rango.models import Category
 from rango.models import Page
+
+from django.shortcuts import render
+
+from django.http import HttpResponse
+
 from rango.forms import CategoryForm
 from rango.forms import PageForm
 from django.shortcuts import redirect
 from django.urls import reverse
+from rango.forms import PageForm
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
@@ -20,10 +25,11 @@ def index(request):
 
 
 def about(request):
-    # return a rendered response to the client
-    # we make use of the shortcut function to make our lives easier.
-    # note that the first parameter is the template we wish to use.
-    return render(request, 'rango/about.html')
+    # prints out whether the method is a GET or a POST
+    print(request.method)
+    # prints out the user name, if no one is logged in it prints `AnonymousUser`
+    print(request.user)
+    return render(request, 'rango/about.html', {})
 
 def show_category(request, category_name_slug):
     context_dict = {}
